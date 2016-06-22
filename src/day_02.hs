@@ -1,4 +1,5 @@
 import System.Environment
+import Data.List
 
 main = do (file:_) <- getArgs
           input <- readFile file
@@ -23,7 +24,7 @@ tokeniser accum inp
  | otherwise = init accum ++ [last accum ++ [inp]]
 
 tokenise :: String -> [String]
-tokenise = foldl tokeniser [""]
+tokenise = foldl' tokeniser [""]
 
 tokeniseAll :: String -> [[String]]
 tokeniseAll input = map tokenise $ lines input

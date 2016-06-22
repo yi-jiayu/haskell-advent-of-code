@@ -1,3 +1,4 @@
+import           Data.List
 import qualified Data.Set           as Set
 import           System.Environment
 
@@ -21,7 +22,7 @@ move state direction
                        in (newpos, newpos:snd state)
 
 countHouses :: String -> (Int, Int) -> Int
-countHouses directions startpos = length $ Set.fromList $ snd $ foldl move (startpos, [startpos]) directions
+countHouses directions startpos = length $ Set.fromList $ snd $ foldl' move (startpos, [startpos]) directions
 
 santapos (pos, _, _) = pos
 
@@ -57,4 +58,4 @@ moveRoboSanta state direction
                        in (santapos state, newpos, newpos:visited state)
 
 countHouses' :: String -> (Int, Int) -> Int
-countHouses' directions startpos = length $ Set.fromList $ visited $ foldl move' (startpos, startpos, [startpos]) directions
+countHouses' directions startpos = length $ Set.fromList $ visited $ foldl' move' (startpos, startpos, [startpos]) directions

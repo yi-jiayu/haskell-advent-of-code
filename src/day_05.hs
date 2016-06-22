@@ -1,4 +1,4 @@
-import           Data.List          (isInfixOf, elemIndices)
+import           Data.List          (foldl', isInfixOf, elemIndices)
 import           System.Environment
 
 hasThreeVowels :: String -> Bool
@@ -8,7 +8,7 @@ isVowel :: Char -> Bool
 isVowel c = c `elem` ['a', 'e', 'i', 'o', 'u']
 
 hasRepeatedLetter :: String -> Bool
-hasRepeatedLetter s = fst $ foldl isRepeatedLetter (False, ' ') s
+hasRepeatedLetter s = fst $ foldl' isRepeatedLetter (False, ' ') s
 
 isRepeatedLetter :: (Bool, Char) -> Char -> (Bool, Char)
 isRepeatedLetter accum next = let rep = fst accum || (snd accum == next)
