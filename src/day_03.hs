@@ -1,6 +1,7 @@
 import qualified Data.Set           as Set
 import           System.Environment
 
+main :: IO ()
 main = do (file:_) <- getArgs
           input <- readFile file
           putStrLn "Houses which receive at least one present in year one:"
@@ -19,6 +20,7 @@ move state direction
   | direction == 'v' = let newpos = (fst $ fst state, snd (fst state) - 1)
                        in (newpos, newpos:snd state)
 
+countHouses :: String -> (Int, Int) -> Int
 countHouses directions startpos = length $ Set.fromList $ snd $ foldl move (startpos, [startpos]) directions
 
 santapos (pos, _, _) = pos
@@ -54,4 +56,5 @@ moveRoboSanta state direction
   | direction == 'v' = let newpos = (fst $ rsantapos state, snd (rsantapos state) - 1)
                        in (santapos state, newpos, newpos:visited state)
 
+countHouses' :: String -> (Int, Int) -> Int
 countHouses' directions startpos = length $ Set.fromList $ visited $ foldl move' (startpos, startpos, [startpos]) directions

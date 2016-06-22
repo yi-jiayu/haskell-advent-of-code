@@ -9,13 +9,14 @@ test :: String -> Int -> String
 test secret nonce = md5str . pack $ secret ++ show nonce
 
 check :: Int -> String -> Bool
-check target hash = concat (replicate target "0") == take target hash
+check target hsh = concat (replicate target "0") == take target hsh
 
 mine :: String -> Int -> Int -> Int
 mine secret target nonce = if check target (test secret nonce)
                            then nonce
                            else mine secret target $ succ nonce
 
+main :: IO ()
 main = do (secret:_) <- getArgs
           putStrLn "First nonce which hashes below difficulty 5:"
           print $ mine secret 5 0
