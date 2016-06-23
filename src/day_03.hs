@@ -2,7 +2,6 @@ import           Data.List
 import qualified Data.Set           as Set
 import           System.Environment
 
-main :: IO ()
 main = do (file:_) <- getArgs
           input <- readFile file
           putStrLn "Houses which receive at least one present in year one:"

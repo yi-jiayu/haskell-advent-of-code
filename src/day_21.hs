@@ -43,7 +43,7 @@ types :: String -> [String]
 types = splitOn "\n\n"
 
 items :: String -> [[String]]
-items s = tail $ map (filter (/= "") . splitOn " ") (lines s)
+items s = tail $ map words (lines s)
 
 parseItem :: [String] -> Item
 parseItem (_:cost':dmg':amr':_) = let [cost, dmg, amr] = map read [cost', dmg', amr']
@@ -67,7 +67,6 @@ playerLoadouts hp = map $ eqp (Attacker hp 0 0 0)
 battles :: [Attacker] -> Attacker -> [(Bool, (Attacker, Attacker))]
 battles loadouts boss = map (battle boss) loadouts
 
-main :: IO ()
 main = do (inpFile:playerHp':bossHp':bossDmg':bossAmr':_) <- getArgs
           input <- readFile inpFile
           let [playerHp, bossHp, bossDmg, bossAmr] = map read [playerHp', bossHp', bossDmg', bossAmr']

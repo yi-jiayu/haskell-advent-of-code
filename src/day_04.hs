@@ -16,7 +16,6 @@ mine secret target nonce = if check target (test secret nonce)
                            then nonce
                            else mine secret target $ succ nonce
 
-main :: IO ()
 main = do (secret:_) <- getArgs
           putStrLn "First nonce which hashes below difficulty 5:"
           print $ mine secret 5 0

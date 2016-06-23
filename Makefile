@@ -1,7 +1,8 @@
-HS_SOURCES = $(wildcard src/*.hs)
-HS_BINARIES = $(HS_SOURCES:src/%.hs=out/%.exe)
+HS_SOURCES = $(wildcard src/day_*.hs)
+HS_BINARIES = $(HS_SOURCES:src/day_%.hs=out/day_%.exe)
+OUT = ./out
 
 all: $(HS_BINARIES)
 
 out/%.exe: src/%.hs
-	ghc -o $@ -outputdir out $<
+	ghc --make -outputdir $(OUT) -o $@ $<

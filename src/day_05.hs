@@ -51,7 +51,6 @@ isRepeatedLetterWithSeparator (h, _, t) = h == t
 isNiceString' :: String -> Bool
 isNiceString' s = hasRepeatedPair s && hasRepeatedLetterWithSeparator s
 
-main :: IO ()
 main = do (file:_) <- getArgs
           input <- readFile file
           putStrLn "Number of nice strings under old rules:"
