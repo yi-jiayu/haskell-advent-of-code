@@ -80,7 +80,7 @@ turn spell state = let hardmodeCheck = applyHardmode state
                                                    else postBossAtk { outcome = UNDET }
 
 bossAttack :: GameState -> GameState
-bossAttack state = state { playerHp = playerHp state - max 1 (bossDmg state - (if shieldTurnsLeft state > 0 then shieldArmour else 0)) }
+bossAttack state = state { playerHp = playerHp state - max 1 (bossDmg state - playerAmr state) }
 
 cast :: Spell -> GameState -> GameState
 cast spell gameState = case spell of MISSILE -> castMissile gameState

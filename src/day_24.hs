@@ -4,21 +4,6 @@ import           Data.List
 readInts :: [String] -> [Int]
 readInts = map read
 
--- next :: [Bool] -> Maybe [Bool]
--- next p = let (cout, p') = mapAccumR ripple True p
---             in if cout then Nothing
---                else Just p'
---
--- ripple :: Bool -> Bool -> (Bool, Bool)
--- ripple cin a
---   | cin && a = (True, True)
---   | cin && not a = (False, True)
---   | not cin && a = (False, True)
---   | not cin && not a = (False, False)
-
--- pack1 :: [Int] -> [Bool] -> [Int]
--- pack1 pkgs mask = (map fst . filter snd) (zip pkgs mask)
-
 calculateQE :: [Int] -> Int
 calculateQE = product
 
