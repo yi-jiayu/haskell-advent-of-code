@@ -1,5 +1,6 @@
-import System.Environment
 import           Data.List
+import           System.Environment
+import           Welcome
 
 readInts :: [String] -> [Int]
 readInts = map read
@@ -46,6 +47,7 @@ main = do (inpFile:_) <- getArgs
                      else pkgs'
           let target = findTarget pkgs
           let packing = findPacking pkgs target
+          welcome 24
           putStrLn "Minimum quantum entanglement for the first group out of three:"
           print $ calculateQE packing
           let target' = findTarget4 pkgs

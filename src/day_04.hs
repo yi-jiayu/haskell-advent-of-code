@@ -1,6 +1,7 @@
-import System.Environment
-import Crypto.Hash
-import Data.ByteString.Char8 (ByteString, pack)
+import           Crypto.Hash
+import           Data.ByteString.Char8 (ByteString, pack)
+import           System.Environment
+import           Welcome
 
 md5str :: ByteString -> String
 md5str bs = show (hash bs :: Digest MD5)
@@ -17,6 +18,7 @@ mine secret target nonce = if check target (test secret nonce)
                            else mine secret target $ succ nonce
 
 main = do (secret:_) <- getArgs
+          welcome 4
           putStrLn "First nonce which hashes below difficulty 5:"
           print $ mine secret 5 0
           putStrLn "First nonce which hashes below difficulty 6:"

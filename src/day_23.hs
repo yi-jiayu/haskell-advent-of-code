@@ -1,5 +1,6 @@
 import           Data.Array
 import           System.Environment
+import           Welcome
 
 data Regs = Regs { pc :: Int
                  , r1 :: Int
@@ -104,5 +105,8 @@ jio regs a b
 main = do (inpFile:_) <- getArgs
           input <- readFile inpFile
           let prog = load $ parseAll (lines input)
-          print $ run prog $ Regs 1 0 0
-          print $ run prog $ Regs 1 1 0
+          welcome 23
+          putStrLn "Value in register b at end of program:"
+          print $ r2 (run prog $ Regs 1 0 0)
+          putStrLn "Value in register b at end of program when register a starts at 1:"
+          print $ r2 (run prog $ Regs 1 1 0)

@@ -1,4 +1,5 @@
-import System.Environment
+import           System.Environment
+import           Welcome
 
 data Code = Code { row :: Int
                  , col :: Int
@@ -24,5 +25,6 @@ codeAt r c code = if (row code == r) && (col code == c) then code
 main = do args <- getArgs
           let (targetRow:targetCol:_) = readInts args
           let code = Code 1 1 startVal
+          welcome 25
           putStrLn "Code for the machine:"
           print $ val (codeAt targetRow targetCol code)

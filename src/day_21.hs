@@ -1,6 +1,7 @@
 import           Data.List
 import           Data.List.Split    (splitOn)
 import           System.Environment
+import           Welcome
 
 combinations k ns = filter ((k==).length) (subsequences ns)
 
@@ -74,6 +75,7 @@ main = do (inpFile:playerHp':bossHp':bossDmg':bossAmr':_) <- getArgs
           let outcomes = battles (playerLoadouts playerHp choices) (Attacker bossHp bossDmg bossAmr 0)
           let winningOutcomes = filter fst outcomes
           let cheapestWinningLoadout = minimum $ map (worth . fst . snd) winningOutcomes
+          welcome 21
           putStrLn "Least amount of gold player can spend and still win:"
           print cheapestWinningLoadout
           let losingOutcomes = filter (not . fst) outcomes

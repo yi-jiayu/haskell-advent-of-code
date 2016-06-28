@@ -1,8 +1,10 @@
-import System.Environment
-import Data.List
+import           Data.List
+import           System.Environment
+import           Welcome
 
 main = do (file:_) <- getArgs
           input <- readFile file
+          welcome 2
           putStrLn "Square feet of wrapping paper the elves should order:"
           print $ sum $ wrapAll $ tokeniseAll input
           putStrLn "Feet of ribbon the elves should order:"
@@ -29,6 +31,7 @@ tokenise = foldl' tokeniser [""]
 tokeniseAll :: String -> [[String]]
 tokeniseAll input = map tokenise $ lines input
 
+wrapAll :: [[String]] -> [Int]
 wrapAll = map wrap
 
 shortestPerimeter :: Int -> Int -> Int -> Int
@@ -41,4 +44,5 @@ tie :: [String] -> Int
 tie [l', w', h'] = shortestPerimeter l w h + volume l w h
  where [l, w, h] = map read [l', w', h']
 
+tieAll :: [[String]] -> [Int]
 tieAll = map tie

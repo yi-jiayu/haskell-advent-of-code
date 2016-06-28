@@ -1,4 +1,5 @@
-import System.Environment
+import           System.Environment
+import           Welcome
 
 data GameState = GameState { playerHp          :: Int
                            , playerMp          :: Int
@@ -143,6 +144,7 @@ applyHardmode state = if hardMode state
 
 main = do args <- getArgs
           let (pHp: pMp: bHp: bDmg: _) = readInts args
+          welcome 22
           putStrLn "Least amount of mana needed to win (non-hardmode):"
           print $ dfs (maxBound :: Int) [newGame pHp pMp bHp bDmg False]
           putStrLn "Least amount of mana needed to win (hardmode):"

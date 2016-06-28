@@ -1,5 +1,6 @@
-import           Data.List          (foldl', isInfixOf, elemIndices)
+import           Data.List          (elemIndices, foldl', isInfixOf)
 import           System.Environment
+import           Welcome
 
 hasThreeVowels :: String -> Bool
 hasThreeVowels x = 2 < length (filter isVowel x)
@@ -53,6 +54,7 @@ isNiceString' s = hasRepeatedPair s && hasRepeatedLetterWithSeparator s
 
 main = do (file:_) <- getArgs
           input <- readFile file
+          welcome 5
           putStrLn "Number of nice strings under old rules:"
           print $ length (filter isNiceString $ lines input)
           putStrLn "Number of nice strings under new rules:"

@@ -1,5 +1,6 @@
-import System.Environment
-import Data.Char
+import           Data.Char
+import           System.Environment
+import           Welcome
 
 splitMolecues :: ([String], Char) -> Char -> ([String], Char)
 splitMolecues accum next
@@ -22,5 +23,6 @@ steps mol = length mol  - count mol "Rn" - count mol "Ar" - 2 * count mol "Y" - 
 main = do (inpFile:_) <- getArgs
           input <- readFile inpFile
           let medicineMolecue = (head . lines) input
+          welcome 19
           putStrLn "Number of steps to go from e to medicine molecule:"
           print $ (steps . molecues) medicineMolecue

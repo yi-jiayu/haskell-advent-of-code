@@ -1,4 +1,5 @@
-import System.Environment
+import           System.Environment
+import           Welcome
 
 factors :: Int -> [Int]
 factors n = let f1 = filter ((== 0) . mod n) [2..(floor . sqrt . fromIntegral) n]
@@ -13,9 +14,7 @@ presents' h = (*11) . sum . filter (> quot h 50). factors $ h
 
 main = do (nPresents':_) <- getArgs
           let nPresents = read nPresents' :: Int
-          putStrLn "Haskell Advent of Code"
-          putStrLn "https://github.com/yi-jiayu/haskell-advent-of-code"
-          putStrLn "Day 20\n"
+          welcome 20
           putStrLn $ "Lowest house number to get " ++ nPresents' ++ " presents:"
           print $ (length . takeWhile (< nPresents) . map presents) [0..]
           putStrLn $ "Lowest house number to get " ++ nPresents' ++ " presents with lazy elves:"
