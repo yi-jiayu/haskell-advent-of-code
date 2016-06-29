@@ -4,9 +4,10 @@ OUT = ./out
 
 all: $(HS_BINARIES)
 
-out/%.exe: src/%.hs
-	ghc --make -outputdir out/temp -o $@ $<
-	@rm -rf out/temp
+out/%.exe: src/%.hs Welcome.hs
+	ghc --make -O2 -outputdir intermediate -o $@ $<
+	@rm -f intermediate/Main.*
 
 .PHONY clean:
 	rm -f $(OUT)/*
+	rf -f intermediate/*
