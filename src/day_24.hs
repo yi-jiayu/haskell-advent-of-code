@@ -2,9 +2,6 @@ import           Data.List
 import           System.Environment
 import           Welcome
 
-readInts :: [String] -> [Int]
-readInts = map read
-
 calculateQE :: [Int] -> Int
 calculateQE = product
 
@@ -40,17 +37,24 @@ findPacking4 pkgs target = let packings = findPackings pkgs target
 findLowerQE :: [Int] -> [[Int]] -> Bool
 findLowerQE packing packings = any (\x -> calculateQE x < calculateQE packing) (takeWhile (\x -> length x <= length packing) packings)
 
-main = do (inpFile:_) <- getArgs
-          input <- readFile inpFile
-          let pkgs' = (reverse . readInts . lines) input
-          let pkgs = if last pkgs' == 1 then 1:init pkgs'
-                     else pkgs'
-          let target = findTarget pkgs
-          let packing = findPacking pkgs target
-          welcome 24
-          putStrLn "Minimum quantum entanglement for the first group out of three:"
-          print $ calculateQE packing
-          let target' = findTarget4 pkgs
-          let packing' = findPacking4 pkgs target'
-          putStrLn "Minimum quantum entanglement for the first group out of four:"
-          print $ calculateQE packing'
+usage :: IO ()
+usage = putStrLn "Usage: day_24.exe path/to/input"
+
+soln :: [String] -> IO ()
+soln args = do input <- readFile (head args)
+               let pkgs' = (reverse . readInts . lines) input
+               let pkgs = if last pkgs' == 1 then 1:init pkgs'
+                          else pkgs'
+               let target = findTarget pkgs
+               let packing = findPacking pkgs target
+               welcome 24
+               putStrLn "Minimum quantum entanglement for the first group out of three:"
+               print $ calculateQE packing
+               let target' = findTarget4 pkgs
+               let packing' = findPacking4 pkgs target'
+               putStrLn "Minimum quantum entanglement for the first group out of four:"
+               print $ calculateQE packing'
+
+main = do args <- getArgs
+          if null args then usage
+          else soln args

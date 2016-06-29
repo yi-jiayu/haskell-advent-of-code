@@ -102,11 +102,19 @@ jio regs a b
   where ra = r1 regs
         rb = r2 regs
 
-main = do (inpFile:_) <- getArgs
-          input <- readFile inpFile
-          let prog = load $ parseAll (lines input)
-          welcome 23
-          putStrLn "Value in register b at end of program:"
-          print $ r2 (run prog $ Regs 1 0 0)
-          putStrLn "Value in register b at end of program when register a starts at 1:"
-          print $ r2 (run prog $ Regs 1 1 0)
+usage :: IO ()
+usage = putStrLn "day_23.exe path/to/input"
+
+soln :: [String] -> IO ()
+soln args = do input <- readFile (head args)
+               let prog = load $ parseAll (lines input)
+               welcome 23
+               putStrLn "Value in register b at end of program:"
+               print $ r2 (run prog $ Regs 1 0 0)
+               putStrLn "Value in register b at end of program when register a starts at 1:"
+               print $ r2 (run prog $ Regs 1 1 0)
+
+
+main = do args <- getArgs
+          if null args then usage
+          else soln args

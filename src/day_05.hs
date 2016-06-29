@@ -52,10 +52,18 @@ isRepeatedLetterWithSeparator (h, _, t) = h == t
 isNiceString' :: String -> Bool
 isNiceString' s = hasRepeatedPair s && hasRepeatedLetterWithSeparator s
 
-main = do (file:_) <- getArgs
-          input <- readFile file
-          welcome 5
-          putStrLn "Number of nice strings under old rules:"
-          print $ length (filter isNiceString $ lines input)
-          putStrLn "Number of nice strings under new rules:"
-          print $ length (filter isNiceString' $ lines input)
+usage :: IO ()
+usage = putStrLn "Usage: day_05.exe path/to/input"
+
+soln :: [String] -> IO ()
+soln args = do input <- readFile (head args)
+               welcome 5
+               putStrLn "Number of nice strings under old rules:"
+               print $ length (filter isNiceString $ lines input)
+               putStrLn "Number of nice strings under new rules:"
+               print $ length (filter isNiceString' $ lines input)
+
+
+main = do args <- getArgs
+          if null args then usage
+          else soln args

@@ -20,9 +20,17 @@ count list e = (length . filter (== e)) list
 steps :: [String] -> Int
 steps mol = length mol  - count mol "Rn" - count mol "Ar" - 2 * count mol "Y" - 1
 
-main = do (inpFile:_) <- getArgs
-          input <- readFile inpFile
-          let medicineMolecue = (head . lines) input
-          welcome 19
-          putStrLn "Number of steps to go from e to medicine molecule:"
-          print $ (steps . molecues) medicineMolecue
+usage :: IO ()
+usage = putStrLn "Usage: day_19.exe path/to/input"
+
+soln :: [String] -> IO ()
+soln args = do input <- readFile (head args)
+               let medicineMolecue = (head . lines) input
+               welcome 19
+               putStrLn "Number of steps to go from e to medicine molecule:"
+               print $ (steps . molecues) medicineMolecue
+
+
+main = do args <- getArgs
+          if null args then usage
+          else soln args

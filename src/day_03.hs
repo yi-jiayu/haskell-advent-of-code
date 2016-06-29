@@ -3,14 +3,6 @@ import qualified Data.Set           as Set
 import           System.Environment
 import           Welcome
 
-main = do (file:_) <- getArgs
-          input <- readFile file
-          welcome 3
-          putStrLn "Houses which receive at least one present in year one:"
-          print $ countHouses input (0, 0)
-          putStrLn "Houses which receive at least one present in year two:"
-          print $ countHouses' input (0, 0)
-
 move :: ((Int, Int), [(Int, Int)]) -> Char -> ((Int, Int), [(Int, Int)])
 move state direction
   | direction == '>' = let newpos = (fst (fst state) + 1, snd $ fst state)
@@ -21,6 +13,7 @@ move state direction
                        in (newpos, newpos:snd state)
   | direction == 'v' = let newpos = (fst $ fst state, snd (fst state) - 1)
                        in (newpos, newpos:snd state)
+  | otherwise = error "err: invalid input"
 
 countHouses :: String -> (Int, Int) -> Int
 countHouses directions startpos = length $ Set.fromList $ snd $ foldl' move (startpos, [startpos]) directions
@@ -46,6 +39,7 @@ moveSanta state direction
                        in (newpos, rsantapos state, newpos:visited state)
   | direction == 'v' = let newpos = (fst $ santapos state, snd (santapos state) - 1)
                        in (newpos, rsantapos state, newpos:visited state)
+  | otherwise = error "err: invalid input"
 
 moveRoboSanta :: ((Int, Int), (Int, Int), [(Int, Int)]) -> Char -> ((Int, Int), (Int, Int), [(Int, Int)])
 moveRoboSanta state direction
@@ -57,6 +51,23 @@ moveRoboSanta state direction
                        in (santapos state, newpos, newpos:visited state)
   | direction == 'v' = let newpos = (fst $ rsantapos state, snd (rsantapos state) - 1)
                        in (santapos state, newpos, newpos:visited state)
+  | otherwise = error "err: invalid input"
 
 countHouses' :: String -> (Int, Int) -> Int
 countHouses' directions startpos = length $ Set.fromList $ visited $ foldl' move' (startpos, startpos, [startpos]) directions
+
+usage :: IO ()
+usage = putStrLn "Usage: day_03.exe path/to/input"
+
+soln :: [String] -> IO ()
+soln args = do input <- readFile (head args)
+               welcome 3
+               putStrLn "Houses which receive at least one present in year one:"
+               print $ countHouses input (0, 0)
+               putStrLn "Houses which receive at least one present in year two:"
+               print $ countHouses' input (0, 0)
+
+main = do args <- getArgs
+          if null args
+            then usage
+            else soln args

@@ -36,9 +36,6 @@ rechargeCost = 229
 rechargeDuration = 5
 rechargeAmount = 101
 
-readInts :: [String] -> [Int]
-readInts = map read
-
 newGame :: Int -> Int -> Int -> Int -> Bool -> GameState
 newGame pHp pMp bHp bDmg hm = GameState pHp pMp 0 bHp bDmg 0 0 0 0 hm UNDET
 
@@ -142,10 +139,18 @@ applyHardmode state = if hardMode state
                       then state { playerHp = playerHp state - 1 }
                       else state
 
+usage :: IO ()
+usage = putStrLn "Usage: day_22.exe player_hp player_mp boss_hp boss_dmg"
+
+soln :: [String] -> IO ()
+soln args = do let (pHp: pMp: bHp: bDmg: _) = readInts args
+               welcome 22
+               putStrLn "Least amount of mana needed to win (non-hardmode):"
+               print $ dfs (maxBound :: Int) [newGame pHp pMp bHp bDmg False]
+               putStrLn "Least amount of mana needed to win (hardmode):"
+               print $ dfs (maxBound :: Int) [newGame pHp pMp bHp bDmg True]
+
 main = do args <- getArgs
-          let (pHp: pMp: bHp: bDmg: _) = readInts args
-          welcome 22
-          putStrLn "Least amount of mana needed to win (non-hardmode):"
-          print $ dfs (maxBound :: Int) [newGame pHp pMp bHp bDmg False]
-          putStrLn "Least amount of mana needed to win (hardmode):"
-          print $ dfs (maxBound :: Int) [newGame pHp pMp bHp bDmg True]
+          if null args
+            then usage
+            else soln args

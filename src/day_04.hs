@@ -17,9 +17,17 @@ mine secret target nonce = if check target (test secret nonce)
                            then nonce
                            else mine secret target $ succ nonce
 
-main = do (secret:_) <- getArgs
-          welcome 4
-          putStrLn "First nonce which hashes below difficulty 5:"
-          print $ mine secret 5 0
-          putStrLn "First nonce which hashes below difficulty 6:"
-          print $ mine secret 6 0
+usage :: IO ()
+usage = putStrLn "Usage: day_04.exe secret_key"
+
+soln :: [String] -> IO ()
+soln args = do let secret = head args
+               welcome 4
+               putStrLn "First nonce which hashes below difficulty 5:"
+               print $ mine secret 5 0
+               putStrLn "First nonce which hashes below difficulty 6:"
+               print $ mine secret 6 0
+
+main = do args <- getArgs
+          if null args then usage
+          else soln args
